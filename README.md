@@ -1,68 +1,109 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Gonzalo Franchino - Portfolio & Blog
 
-## Available Scripts
+Personal portfolio and weekly blog on rapid SaaS development and AI-accelerated software delivery.
 
-In the project directory, you can run:
+**Live at:** https://gonzajf.github.io/
 
-### `npm start`
+## Project Structure
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+├── index.html              # Main resume page
+├── styles.css              # Global styling
+├── blog/
+│   ├── index.html          # Blog list page
+│   ├── post.html           # Individual post template
+│   ├── blog.css            # Blog-specific styling
+│   └── posts/
+│       └── *.md            # Blog posts (markdown)
+└── README.md               # This file
+```
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Adding a New Blog Post
 
-### `npm test`
+1. **Create a new markdown file** in `blog/posts/`:
+   ```
+   blog/posts/your-slug-here.md
+   ```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Write your post** in markdown format:
+   ```markdown
+   # Your Post Title
 
-### `npm run build`
+   Your content here...
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ## Section
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+   More content.
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Register the post** in `blog/index.html`:
+   - Find the `posts` array in the script section
+   - Add an entry at the top (newest first):
+   ```javascript
+   {
+       title: "Your Post Title",
+       date: "2026-06-27",        // YYYY-MM-DD format
+       slug: "your-slug-here",    // matches the filename without .md
+       excerpt: "A 1-2 sentence summary of your post"
+   }
+   ```
 
-### `npm run eject`
+4. **Push to GitHub:**
+   ```bash
+   git add blog/posts/your-slug-here.md blog/index.html
+   git commit -m "blog: add post about your topic"
+   git push
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Writing Tips
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Keep it authentic** — Write what you're learning, not what sounds impressive
+- **One topic per post** — Easier to read and reference later
+- **Markdown headings** — Use `#` (h1) for title, `##` for sections
+- **Code blocks** — Use triple backticks with language tags:
+  ````markdown
+  ```javascript
+  const example = "code";
+  ```
+  ````
+- **Links** — Use standard markdown: `[link text](url)`
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Styling
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Blog styling is in `blog/blog.css`
+- Main styling is in `styles.css`
+- Color scheme uses CSS variables (easily customizable)
+- Responsive design works on mobile, tablet, desktop
 
-## Learn More
+## Publishing Flow
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Write your post locally in `blog/posts/your-slug.md`
+2. Add entry to `posts` array in `blog/index.html`
+3. Test locally (open `blog/index.html` in browser)
+4. Commit and push to `master` branch
+5. GitHub Pages auto-deploys (usually within 1-2 minutes)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Tips for Weekly Posts
 
-### Code Splitting
+**Scheduling:**
+- Set a reminder for your posting day (e.g., every Friday)
+- Write posts in batches if easier (e.g., write 4 at once, schedule over month)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+**Content ideas:**
+- What you learned building this week
+- Market observations (trends, opportunities)
+- Technical insights from recent projects
+- Retrospectives on past decisions
 
-### Analyzing the Bundle Size
+**Keep it short:**
+- Aim for 500-1000 words
+- 5-10 minutes to read
+- One main idea per post
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Contact
 
-### Making a Progressive Web App
+Inquiries: [gj.franchino@gmail.com](mailto:gj.franchino@gmail.com)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+---
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Built with HTML, CSS, and markdown. No frameworks, no build step, no complexity.

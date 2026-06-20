@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Gonzalo Franchino</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="blog-header">
+            <a href="/" class="back-link">← Back to Resume</a>
+            <h1>Blog</h1>
+            <p class="subtitle">Thoughts on rapid SaaS development, AI integration, and building for impact.</p>
+        </header>
+
+        <div id="posts-container" class="posts-container">
+            <!-- Posts will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // List of blog posts (add new posts here at the top)
+        const posts = [
+            {
+                title: "Starting the SaaS Journey: Building the Checklist Platform",
+                date: "2026-06-20",
+                slug: "starting-saas-journey",
+                excerpt: "After 10+ years building enterprise software, I'm pivoting to rapid SaaS development with AI. Here's why and what I'm building."
+            },
+            // Add more posts here as you write them
+            // Format: { title, date (YYYY-MM-DD), slug, excerpt }
+        ];
+
+        async function loadPost(slug) {
+            try {
+                const response = await fetch(`posts/${slug}.md`);
+                if (!response.ok) throw new Error('Post not found');
+                return await response.text();
+            } catch (error) {
+                console.error('Error loading post:', error);
+                return null;
+            }
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00Z');
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        async function renderPosts() {
+            const container = document.getElementById('posts-container');
+
+            for (const post of posts) {
+                const content = await loadPost(post.slug);
+                if (!content) continue;
+
+                const postHtml = `
+                    <article class="post-preview">
+                        <div class="post-meta">
+                            <time class="post-date">${formatDate(post.date)}</time>
+                        </div>
+                        <h2 class="post-title">
+                            <a href="post.html?slug=${post.slug}">${post.title}</a>
+                        </h2>
+                        <p class="post-excerpt">${post.excerpt}</p>
+                        <a href="post.html?slug=${post.slug}" class="read-more">Read →</a>
+                    </article>
+                `;
+
+                container.insertAdjacentHTML('beforeend', postHtml);
+            }
+        }
+
+        renderPosts();
+    </script>
+</body>
+</html>

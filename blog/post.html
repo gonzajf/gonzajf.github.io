@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post | Gonzalo Franchino</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="blog-header">
+            <a href="/blog" class="back-link">← Back to Blog</a>
+        </header>
+
+        <article class="post">
+            <header class="post-header">
+                <h1 id="post-title"></h1>
+                <time id="post-date" class="post-date"></time>
+            </header>
+            <div id="post-content" class="post-content">
+                <!-- Markdown content will be rendered here -->
+            </div>
+        </article>
+
+        <footer class="post-footer">
+            <a href="/blog" class="back-link">← Back to Blog</a>
+        </footer>
+    </div>
+
+    <script>
+        function getSlugFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('slug');
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00Z');
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        async function loadPost() {
+            const slug = getSlugFromUrl();
+            if (!slug) {
+                document.getElementById('post-content').innerHTML = '<p>Post not found.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`posts/${slug}.md`);
+                if (!response.ok) throw new Error('Post not found');
+
+                const markdown = await response.text();
+                const html = marked.parse(markdown);
+
+                document.getElementById('post-content').innerHTML = html;
+
+                // Extract title from first h1 or use slug
+                const firstH1 = markdown.match(/^# (.+)/m);
+                const title = firstH1 ? firstH1[1] : slug.replace(/-/g, ' ');
+                document.getElementById('post-title').textContent = title;
+                document.title = `${title} | Gonzalo Franchino`;
+            } catch (error) {
+                console.error('Error loading post:', error);
+                document.getElementById('post-content').innerHTML = '<p>Error loading post.</p>';
+            }
+        }
+
+        loadPost();
+    </script>
+</body>
+</html>
